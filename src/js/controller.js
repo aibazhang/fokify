@@ -5,6 +5,7 @@ import ResultsView from './views/resultsView.js';
 import BookmarksView from './views/bookmarksView.js';
 import PaginationView from './views/paginationView.js';
 import AddRecipeView from './views/addRecipeView.js';
+import addRecipeView from './views/addRecipeView.js';
 
 // From Parcel
 if (module.hot) {
@@ -92,10 +93,14 @@ const controlBookmarks = function () {
   BookmarksView.render(model.state.bookmarks);
 };
 
-const controlAddRecipe = function (newRecipe) {
-  console.log(newRecipe);
-
-  // Upload the new recipe data
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // Upload the new recipe data
+    await model.uploadRecipe(newRecipe);
+  } catch (err) {
+    console.log('💥', err);
+    addRecipeView.renderError(err.message);
+  }
 };
 
 const init = function () {
