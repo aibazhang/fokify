@@ -4,6 +4,7 @@ import SearchView from './views/searchView.js';
 import ResultsView from './views/resultsView.js';
 import BookmarksView from './views/bookmarksView.js';
 import PaginationView from './views/paginationView.js';
+import AddRecipeView from './views/addRecipeView.js';
 
 // From Parcel
 if (module.hot) {
