@@ -5,9 +5,9 @@ import ResultsView from './views/resultsView.js';
 import BookmarksView from './views/bookmarksView.js';
 import PaginationView from './views/paginationView.js';
 import AddRecipeView from './views/addRecipeView.js';
-import addRecipeView from './views/addRecipeView.js';
 import { MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 // From Parcel
 if (module.hot) {
@@ -98,7 +98,7 @@ const controlBookmarks = function () {
 const controlAddRecipe = async function (newRecipe) {
   try {
     // Show loading spinner
-    addRecipeView.renderSpinner();
+    AddRecipeView.renderSpinner();
 
     // Upload the new recipe data
     await model.uploadRecipe(newRecipe);
@@ -108,15 +108,22 @@ const controlAddRecipe = async function (newRecipe) {
     recipeView.render(model.state.recipe);
 
     // Success message
-    addRecipeView.renderMessage();
+    AddRecipeView.renderMessage();
+
+    // Render bookmark view
+    bookmarksView.render(model.state.bookmarks);
+
+    // Change ID in URL
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+    // window.history.back()
 
     // Close from window
     setTimeout(function () {
-      addRecipeView.toggleWindow();
+      AddRecipeView.toggleWindow();
     }, MODAL_CLOSE_SEC * 1000);
   } catch (err) {
     console.log('💥', err);
-    addRecipeView.renderError(err.message);
+    AddRecipeView.renderError(err.message);
   }
 };
 
